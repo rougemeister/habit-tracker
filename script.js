@@ -43,8 +43,11 @@ function selectActive(container) {
       if (!clickedItem || !container.contains(clickedItem)) return;
   
       container.querySelector('.active')?.classList.remove('active');
+        document.querySelector('.modal').style.display = 'block';
+
       clickedItem.classList.add('active');
     });
+    
   }
   
 function renderHabitList(){
@@ -69,12 +72,3 @@ selectActive(listElement);
 
 
 
-const prince = {
-    name: "Prince",
-}
-
-let anotherObject = prince
-
-
-anotherObject.name = "John"
-console.log(prince.name)
