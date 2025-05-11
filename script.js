@@ -1,6 +1,9 @@
 
 const selectedEmoji = document.getElementById('selected-emoji');
 const emojiPicker = document.getElementById('emoji-picker');
+const createList = document.querySelector('.create-list');
+const closeSelectActiveModal = document.querySelector('.active-close');
+const closeCreateListBtn = document.querySelector('.close-create-list');
 
 class Category {
     constructor(name, icon) {
@@ -74,7 +77,7 @@ function selectActive(container) {
       if (!clickedItem || !container.contains(clickedItem)) return;
   
       container.querySelector('.active')?.classList.remove('active');
-        document.querySelector('.modal').style.display = 'block';
+        document.querySelector('.select-active-modal').style.display = 'block';
 
       clickedItem.classList.add('active');
     });
@@ -124,3 +127,14 @@ emojis.forEach(emoji => {
     });
     emojiPicker.appendChild(emojiItem);
 });
+
+createList.addEventListener('click', () => {
+    document.querySelector('.create-list-modal').style.display = 'block';
+})
+
+
+function closeModal() {
+    document.querySelector('.modal').style.display = 'none';
+}
+closeCreateListBtn.addEventListener('click', closeModal);
+closeSelectActiveModal.addEventListener('click', closeModal);

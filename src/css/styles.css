@@ -105,8 +105,15 @@ input {
     top: 2px;
 }
 /* modal */
-.modal {
+
+.create-list-modal {
+    display: none;
+}
+.select-active-modal {
     display: none; /* Hidden by default */
+}
+.modal {
+   
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -122,7 +129,7 @@ input {
     margin: 15% auto;
     padding: 1rem 2rem;
     border-radius: 10px;
-    width: 100%;
+    width: 95%;
     position: relative;
   }
   
@@ -134,7 +141,7 @@ input {
     cursor: pointer;
   }
 
-  
+
   .emoji-container {
     margin-top: 10px;
     display: flex;
