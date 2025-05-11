@@ -1,3 +1,31 @@
+
+const selectedEmoji = document.getElementById('selected-emoji');
+const emojiPicker = document.getElementById('emoji-picker');
+
+class Category {
+    constructor(name, icon) {
+        this.name = name;
+        this.icon = icon;
+        this.count = 0;
+        this.increase = function() {
+            this.count++;
+        };
+        this.decrease = function() {
+            this.count--;
+        };
+    }
+}
+
+
+function createCategory(name, icon) {
+    return new Category(name, icon);
+}
+
+function addToCategory(name, icon) {
+    habitList.push(createCategory(name, icon));
+}
+
+
 const habitList = [
     {
         name: 'Exercise',
@@ -35,6 +63,9 @@ const habitList = [
     
 ]
 
+
+addToCategory('Bobba', '🏋️');
+
 const listElement = document.querySelector('.list');
 
 function selectActive(container) {
@@ -70,5 +101,26 @@ renderHabitList();
 selectActive(listElement);
 
 
+            
+// Common emojis for lists
+const emojis = [
+    '📋', '📝', '✅', '📌', '🔖', '📚', '🛒', '🎯',
+    '💼', '🏆', '💡', '🎁', '🍽️', '✈️', '🏠', '💰',
+    '🎬', '🎵', '📺', '📱', '🎮', '💪', '🧘', '🥗',
+    '🍳', '🧹', '🔨', '🛠️', '📅', '⏰', '❤️', '🌟',
+    '🌈', '🌱', '🌻', '🍎', '🥑', '🍕', '🍦', '☕',
+    '🎨', '🎭', '🏛️', '🏝️', '🚗', '🚲', '📷', '🎒'
+];
 
-
+// Populate emoji picker
+emojis.forEach(emoji => {
+    const emojiItem = document.createElement('div');
+    console.log(emoji);
+    emojiItem.className = 'emoji-item';
+    emojiItem.textContent = emoji;
+    emojiItem.addEventListener('click', () => {
+        selectedEmoji.textContent = emoji;
+        emojiPicker.classList.remove('active');
+    });
+    emojiPicker.appendChild(emojiItem);
+});
