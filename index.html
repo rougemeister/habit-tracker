@@ -50,6 +50,74 @@
   </div>
 </div>
 
+<div class="task-modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Create a new habit</h2>
+        <form id="task-form">
+            <div class="form-group">
+                <label class="input-label" for="task-name">Task name</label>
+                <input type="text" id="task-name" name="task-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="input-label" for="habit-category">Habit category</label>
+                <select id="habit-category" name="habit-category" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <!-- Options will be added dynamically -->
+                </select>
+                <div id="selected-habit-display" class="selected-habit" style="display: none;">
+                    <span id="habit-icon" class="habit-icon"></span>
+                    <span id="habit-name"></span>
+                </div>
+            </div>
+            
+            <div class="calendar-container">
+                <label class="input-label">Start date</label>
+                <div class="calendar-header">
+                    <div class="month-year" id="month-year"></div>
+                    <div class="calendar-nav">
+                        <button id="prev-month">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+                        </button>
+                        <button id="next-month">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <table class="calendar" id="calendar">
+                    <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body"></tbody>
+                </table>
+                <input type="hidden" id="start-date" name="start-date">
+            </div>
+            
+            <div class="form-group">
+                <label class="input-label" for="end-date">End date</label>
+                <input type="date" id="end-date" name="end-date" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="input-label" for="task-time">Set time</label>
+                <input type="time" id="task-time" name="task-time" required>
+            </div>
+            
+            <button type="submit">Save changes</button>
+        </form>
+    </div>
+</div>
+
+
 
 
 
