@@ -8,17 +8,25 @@
     <title>Habit Tracker</title>
 </head>
 <body>
-    <main>
+    <header>
+        <h1 class="page-title">Habit Tracker</h1>
+        <div class="date-container">
+            <div id="greeting">Good day!</div>
+            <div id="date">Date loading...</div>
+            <div id="time">00:00:00</div>
+        </div>
+        <div class="button-container">
+            <button class="create-task-btn btn-secondary">Create new task</button>
+        </div>
+    </header>
+    <main>   
         <section class="side-bar">
-            <h1 class="title">Tracker</h1>
+            <h2 class="title">Category</h2>
             <ul class="list">
             </ul>
             <button class="create-list">Create new list</button>
         </section>
     </main>
-
-
-
 
     <div class="create-list-modal modal">
         <div class="modal-content">
@@ -50,18 +58,18 @@
   </div>
 </div>
 
-<div class="task-modal">
+<div class="task-modal modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close-task-btn close">&times;</span>
         <h2>Create a new habit</h2>
         <form id="task-form">
             <div class="form-group">
-                <label class="input-label" for="task-name">Task name</label>
+                <label class="task-name-label" for="task-name">Task name</label>
                 <input type="text" id="task-name" name="task-name" required>
             </div>
             
             <div class="form-group">
-                <label class="input-label" for="habit-category">Habit category</label>
+                <label class="category-label" for="habit-category">Habit category</label>
                 <select id="habit-category" name="habit-category" required>
                     <option value="" disabled selected>Select a category</option>
                     <!-- Options will be added dynamically -->
@@ -73,7 +81,6 @@
             </div>
             
             <div class="calendar-container">
-                <label class="input-label">Start date</label>
                 <div class="calendar-header">
                     <div class="month-year" id="month-year"></div>
                     <div class="calendar-nav">

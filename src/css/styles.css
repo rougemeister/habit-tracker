@@ -15,6 +15,10 @@ body {
     padding: 10px;
 }
 
+header {
+    margin: 15px 0;
+}
+
 .side-bar {
     background-color: white;
     padding: 20px;
@@ -90,6 +94,11 @@ button:hover {
 }
 
 
+.btn-secondary {
+    background-color: #0066cc;
+    color: white;
+}
+
 input {
     width: 100%;
     padding: 10px;
@@ -117,6 +126,12 @@ input {
 .select-active-modal {
     display: none; /* Hidden by default */
 }
+
+.task-modal {
+    display: none; /* Hidden by default */
+}
+
+
 .modal {
    
     position: fixed;
@@ -241,9 +256,19 @@ h2 {
     position: relative;
 }
 
-.input-label {
+.task-name-label {
     position: absolute;
-    top: -8px;
+    top: 2px;
+    left: 10px;
+    background: white;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #666;
+}
+
+.category-label{
+    position: absolute;
+    top: -7px;
     left: 10px;
     background: white;
     padding: 0 5px;
@@ -410,4 +435,28 @@ input:focus, select:focus {
 
 .date-selector input[type="radio"] {
     margin-right: 5px;
+}
+
+
+.date-container {
+    margin: 10px 0;
+    text-align: center;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+#greeting {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+#date {
+    font-size: 1.5rem;
+    color: #34495e;
+}
+#time {
+    font-size: 3rem;
+    margin: 1rem 0;
+    color: #3498db;
 }

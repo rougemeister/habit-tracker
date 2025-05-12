@@ -4,6 +4,9 @@ const emojiPicker = document.getElementById('emoji-picker');
 const createList = document.querySelector('.create-list');
 const closeSelectActiveModal = document.querySelector('.active-close');
 const closeCreateListBtn = document.querySelector('.close-create-list');
+const createNewListBtn = document.querySelector('.create-new-list');
+const closeTaskBtn = document.querySelector('.close-task-btn')
+
 
 class Category {
     constructor(name, icon) {
@@ -128,6 +131,7 @@ emojis.forEach(emoji => {
 });
 
 createList.addEventListener('click', () => {
+
     document.querySelector('.create-list-modal').style.display = 'block';
 })
 
@@ -135,10 +139,11 @@ createList.addEventListener('click', () => {
 function closeModal() {
     document.querySelector('.modal').style.display = 'none';
     document.getElementById('myModal').style.display = 'none';
+    document.querySelector('.task-modal').style.display = 'none';
 }
 closeCreateListBtn.addEventListener('click', closeModal);
 closeSelectActiveModal.addEventListener('click', closeModal);
-
+closeTaskBtn.addEventListener('click', closeModal);
 
 const habitDropdown = document.getElementById('habit-category');
 habitList.forEach((habit, index) => {
@@ -161,6 +166,14 @@ habitDropdown.addEventListener('change', function() {
         habitDisplay.style.display = 'flex';
     }
 });
+
+createNewListBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const listName = document.getElementById('list-name').value;
+    const selectedEmoji = document.getElementById('selected-emoji').textContent;
+    addToCategory(listName, selectedEmoji);
+    document.querySelector('.create-list-modal').style.display = 'none';
+})
 
 // Initialize date variables
 let currentDate = new Date();
@@ -185,7 +198,8 @@ const closeBtn = document.querySelector('.close');
 
 // Helper to format date as YYYY-MM-DD
 function formatDate(date) {
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    return `${date.getFullYear()}-${String(date.getMonth() + 1)
+        .padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
 // Generate calendar
@@ -334,3 +348,40 @@ taskForm.addEventListener('submit', function(event) {
     
     alert(`Habit "${habitData.taskName}" (${habitData.habitCategory}) scheduled from ${habitData.startDate} to ${habitData.endDate} at ${habitData.time}`);
 });
+
+function updateDateTime() {
+    const now = new Date();
+    
+    // Get current hour to determine greeting
+    const hour = now.getHours();
+    let greeting;
+    
+    if (hour >= 5 && hour < 12) {
+        greeting = "Good morning";
+    } else if (hour >= 12 && hour < 18) {
+        greeting = "Good afternoon";
+    } else {
+        greeting = "Good evening";
+    }
+    
+    // Format date
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    const dateStr = now.toLocaleDateString(undefined, options);
+    
+    // Format time
+    const timeStr = now.toLocaleTimeString();
+    
+    // Update DOM
+    document.getElementById('greeting').textContent = greeting;
+    document.getElementById('date').textContent = dateStr;
+    document.getElementById('time').textContent = timeStr;
+}
+
+// Update immediately and then every second
+updateDateTime();
+setInterval(updateDateTime, 1000);
