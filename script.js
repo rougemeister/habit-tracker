@@ -6,6 +6,9 @@ const closeSelectActiveModal = document.querySelector('.active-close');
 const closeCreateListBtn = document.querySelector('.close-create-list');
 const createNewListBtn = document.querySelector('.create-new-list');
 const closeTaskBtn = document.querySelector('.close-task-btn')
+const createTaskBtn = document.querySelector('.create-task-btn');
+const saveChangesBtn = document.querySelector('.save-changes-btn')
+const listElement = document.querySelector('.list');
 
 
 class Category {
@@ -23,12 +26,29 @@ class Category {
 }
 
 
+
+class Habit {
+    constructor(name, startDate, endDate, category, time, icon){
+        this.name = name,
+        this.startDate = startDate,
+        this.endDate = endDate,
+        this.category = category,
+        this.time = time,
+        this.icon = icon
+
+    }
+}
+
+
+tasks = []
+
 function createCategory(name, icon) {
     return new Category(name, icon);
 }
 
 function addToCategory(name, icon) {
     habitList.push(createCategory(name, icon));
+    renderHabitList(habitList); // Re-render after adding
 }
 
 
@@ -72,7 +92,6 @@ const habitList = [
 
 addToCategory('Bobba', '🏋️');
 
-const listElement = document.querySelector('.list');
 
 function selectActive(container) {
     container.addEventListener('click', (event) => {
@@ -87,8 +106,10 @@ function selectActive(container) {
     
   }
   
-function renderHabitList(){
-    habitList.forEach(habit => {
+  function renderHabitList(array) {
+    listElement.innerHTML = ''; // Clear existing items
+
+    array.forEach(habit => {
         const li = document.createElement('li');
         li.innerHTML = `<div class="list-content">
                             <div class="list-content-description">
@@ -99,10 +120,13 @@ function renderHabitList(){
                         </div>`;
         li.classList.add('list-item');
         listElement.appendChild(li);
-    })
+    });
 }
 
-renderHabitList();
+renderHabitList(habitList);
+
+
+
 
 selectActive(listElement);
 
@@ -136,6 +160,10 @@ createList.addEventListener('click', () => {
 })
 
 
+function saveChanges (){
+    
+}
+
 function closeModal() {
     document.querySelector('.modal').style.display = 'none';
     document.getElementById('myModal').style.display = 'none';
@@ -144,6 +172,11 @@ function closeModal() {
 closeCreateListBtn.addEventListener('click', closeModal);
 closeSelectActiveModal.addEventListener('click', closeModal);
 closeTaskBtn.addEventListener('click', closeModal);
+
+
+createTaskBtn.addEventListener('click', function() {
+    document.querySelector('.task-modal').style.display = 'block';
+})
 
 const habitDropdown = document.getElementById('habit-category');
 habitList.forEach((habit, index) => {
@@ -333,20 +366,25 @@ taskForm.addEventListener('submit', function(event) {
     const selectedHabitIndex = habitDropdown.value;
     const selectedHabit = habitList[selectedHabitIndex];
     
-    const habitData = {
-        taskName: taskNameInput.value,
-        habitCategory: selectedHabit ? selectedHabit.name : '',
-        habitIcon: selectedHabit ? selectedHabit.icon : '',
-        startDate: startDateInput.value,
-        endDate: endDateInput.value,
-        time: taskTimeInput.value
-    };
+    // const habitData = {
+    //     taskName: taskNameInput.value,
+    //     habitCategory: selectedHabit ? selectedHabit.name : '',
+    //     habitIcon: selectedHabit ? selectedHabit.icon : '',
+    //     startDate: startDateInput.value,
+    //     endDate: endDateInput.value,
+    //     time: taskTimeInput.value
+    // };
+    const taskData = new Habit(taskNameInput.value, startDateInput.value, 
+        endDateInput.value, selectedHabit ? selectedHabit.name : '', 
+        taskTimeInput.value, selectedHabit ? selectedHabit.icon : '')
     
-    console.log('Habit created:', habitData);
+    tasks.push(taskData)
+    console.log(tasks)
+    
+    console.log('Habit created:', taskData );
     // Here you would typically handle the form submission
     // For example, send the data to a server or store it locally
     
-    alert(`Habit "${habitData.taskName}" (${habitData.habitCategory}) scheduled from ${habitData.startDate} to ${habitData.endDate} at ${habitData.time}`);
 });
 
 function updateDateTime() {
@@ -385,3 +423,5 @@ function updateDateTime() {
 // Update immediately and then every second
 updateDateTime();
 setInterval(updateDateTime, 1000);
+
+
