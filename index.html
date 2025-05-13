@@ -3,10 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/css/styles.css">
+    <script src="./script.js" defer></script>
     <title>Habit Tracker</title>
 </head>
 <body>
- 
-    
+    <header>
+        <h1 class="page-title">Habit Tracker</h1>
+        <div class="date-container">
+            <div class="date-container-greeting">
+                <div id="greeting">Good day!</div>
+            <div id="date">Date loading...</div>
+            </div>
+            
+            <div id="time">00:00:00</div>
+        </div>
+        <div class="button-container">
+            <button class="create-task-btn btn-secondary">Create new task</button>
+        </div>
+    </header>
+    <main>   
+        <section class="side-bar">
+            <h2 class="title">Category</h2>
+            <ul class="list">
+            </ul>
+            <button class="create-list">Create new list</button>
+        </section>
+       <section class="list-container">
+            <div id="task-list"></div>
+       </section>
+        
+    </main>
+
+    <div class="create-list-modal modal">
+        <div class="modal-content">
+            <span class="close-create-list close">&times;</span>
+            <h2 class="create-list-title">Create a new list</h2>
+            <form id="create-list-form">
+                <div class="list-name-container">
+                    <label class="list-name-label" for="list-name">list name</label>
+                    <input type="text" id="list-name" name="list-name" required>
+                </div>
+                <div class="emoji-container">
+                    <div class="emoji-picker-container">
+                        <div class="emoji-label">Choose an emoji:</div>
+                        <div class="emoji-display" id="selected-emoji">😀</div>
+                     </div>
+                    <div class="emoji-picker" id="emoji-picker"></div>
+                </div>
+                
+                <button class="create-new-list">Create</button>
+            </form>
+        </div>
+    </div>
+
+
+<div id="myModal" class="select-active-modal modal">
+  <div class="modal-content">
+    <span id="closeModalBtn" class="active-close close">&times;</span>
+    <p>This is a modal!</p>
+  </div>
+</div>
+
+<div class="modal task-modal">
+    <div class="modal-content">
+        <span class="close-task-btn close">&times;</span>
+        <h2>Create a new habit</h2>
+        <form id="task-form">
+            <div class="form-group">
+                <label class="task-name-label" for="task-name">Task name</label>
+                <input type="text" id="task-name" name="task-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="category-label" for="habit-category">Habit category</label>
+                <select id="habit-category" name="habit-category" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <!-- Options will be added dynamically -->
+                </select>
+                <div id="selected-habit-display" class="selected-habit" style="display: none;">
+                    <span id="habit-icon" class="habit-icon"></span>
+                    <span id="habit-name"></span>
+                </div>
+            </div>
+            
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <div class="month-year" id="month-year"></div>
+                    <div class="calendar-nav">
+                        <button id="prev-month">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+                        </button>
+                        <button id="next-month">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <table class="calendar" id="calendar">
+                    <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body"></tbody>
+                </table>
+                <input type="hidden" id="start-date" name="start-date">
+            </div>
+            
+            <div class="form-group">
+                <label class="input-label" for="end-date">End date</label>
+                <input type="date" id="end-date" name="end-date" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="input-label" for="task-time">Set time</label>
+                <input type="time" id="task-time" name="task-time" required>
+            </div>
+            
+            <button class="save-changes-btn">Save changes</button>
+        </form>
+    </div>
+</div>
+
+
+<div id="editModal" class="modal edit-task-modal">
+    <form class="modal-content" id="editForm">
+      <label class="edit-task-label" for="edit-task-modal">task name</label>
+      <input type="text" id="editTaskName" placeholder="Task Name" required />
+      <label class="edit-task-label" for="editHabitCategory">category</label>
+      <input type="text" id="editHabitCategory" placeholder="Category" required />
+      <label class="edit-task-label" for="editHabitIcon">icon</label>
+      <input type="text" id="editHabitIcon" placeholder="Icon" required />
+      <label class="edit-task-label" for="editStartDate">start date</label>
+      <input type="date" id="editStartDate" required />
+      <label  class="edit-task-label" for="editEndDate">end date</label>
+      <input type="date" id="editEndDate" required />
+      <label  class="edit-task-label" for="editTime">set time</label>
+      <input type="time" id="editTime" required />
+      <button type="submit">Save Changes</button>
+      <button type="button" onclick="closeModal()">Cancel</button>
+    </form>
+  </div>
+
+
 </body>
 </html>
