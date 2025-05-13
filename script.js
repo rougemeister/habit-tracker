@@ -90,18 +90,51 @@ const habitList = JSON.parse(localStorage.getItem('habitList')) || [];
 
 
 
-function selectActive(container) {
+function selectActive(container, habitList) {
     container.addEventListener('click', (event) => {
       const clickedItem = event.target.closest('li');
       if (!clickedItem || !container.contains(clickedItem)) return;
   
+      // Highlight active category
       container.querySelector('.active')?.classList.remove('active');
-        document.querySelector('.select-active-modal').style.display = 'block';
-
       clickedItem.classList.add('active');
+  
+      // Get category name (assumes it's in a span inside .list-content-description)
+      const categoryName = clickedItem.querySelector('.list-content-description span:last-child').textContent;
+  
+      // Find the matching category object from habitList
+      const selectedCategory = habitList.find(h => h.name === categoryName);
+      if (!selectedCategory) return;
+  
+      // Show the modal
+      const modal = document.querySelector('.select-active-modal');
+      const modalContent = modal.querySelector('.modal-content');
+  
+      // Populate modal with selected category's tasks
+      modalContent.innerHTML = `
+        <span id="closeModalBtn" class="active-close close">&times;</span>
+        <h2>${selectedCategory.icon} ${selectedCategory.name}</h2>
+        <p>Total tasks: ${selectedCategory.task.length}</p>
+        <ul>
+          ${selectedCategory.task.map(task => `
+            <li>
+              <strong>${task.taskName}</strong> - ${task.time} <br>
+              ${task.startDate} → ${task.endDate}
+            </li>
+          `).join('')}
+        </ul>
+      `;
+  
+      // Show modal
+      modal.style.display = 'block';
+  
+      // Handle modal close
+      document.getElementById('closeModalBtn').onclick = function () {
+        modal.style.display = 'none';
+      };
     });
-    
   }
+  
   
   function renderHabitList(array) {
     listElement.innerHTML = ''; // Clear existing items
@@ -125,7 +158,7 @@ renderHabitList(habitList);
 
 
 
-selectActive(listElement);
+selectActive(listElement, habitList);
 
 
             
@@ -545,5 +578,3 @@ function deleteTask(index) {
 
 
 renderTasks();
-
-console.log(tasks)  
