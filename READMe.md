@@ -24,9 +24,7 @@ Create habit categories, assign tasks, visualize them on a calendar, and manage 
 
 ---
 
-## 📸 Screenshots
 
-![Habit Tracker UI](https://raw.githubusercontent.com/rougemeister/habit-tracker/main/screenshot.png) <!-- Replace with your actual image path if needed -->
 
 ---
 
