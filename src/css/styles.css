@@ -222,17 +222,6 @@ input {
     align-items: center;
 }
 
-/* Create task modal */
-/* .task-modal {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-} */
 
 .modal-content {
     padding: 24px;
@@ -272,6 +261,11 @@ h2 {
     padding: 0 5px;
     font-size: 12px;
     color: #666;
+}
+
+.task-item-btn {
+    margin-bottom: 5px;
+
 }
 
 .category-label{
@@ -531,4 +525,117 @@ input:focus, select:focus {
 .task-time {
     font-size: 16px;
     color: #666;
+}
+
+
+
+@media screen and (min-width: 520px) {
+   body {
+    padding: 10px 20%;
+
+   }
+}
+
+
+@media screen and (min-width: 768px) {
+    body {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        padding: 20px;
+    }
+
+    .date-container{
+        background-color:transparent;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: initial;
+        width: initial;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        gap: 10px;
+        text-align: left;
+        width: 50%;
+    }
+
+        
+    #greeting {
+        font-size: 1rem;
+        margin:10px 0;
+        color: #2c3e50;
+    }
+    #date {
+        font-size: 1rem;
+        color: #34495e;
+    }
+    #time {
+        font-size: 3rem;
+        margin: 1rem 0;
+        color: #3498db;
+    }
+
+    main {
+        display: flex;
+    }
+
+    .side-bar {
+        width: 300px;
+        height: 400px;
+        margin-right: 20px;
+        padding: 20px;
+        background-color: white;
+    }
+
+    .list-container {
+        width: 100%;
+    }
+
+    .task-item {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+       
+    }
+    .task-item-text {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .task-item-btns {
+        display: flex;
+        gap: 10px;
+    }
+
+    .task-item-btn {
+        height: 30px;
+        width: 100px;
+    }
+   
+    .modal-content {
+        width: 500px;
+    }
+
+    .task-item-date {
+        display: flex;
+        gap: 10px;
+    }
+
+    .start-date,
+    .end-date,
+    .task-time {
+        background-color: #f3ebeb;
+        font-size: 16px;
+        color: #250d0d;
+        padding: 10px 15px;
+        border-radius: 10px;
+    }
 }

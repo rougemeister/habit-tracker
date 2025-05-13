@@ -189,8 +189,7 @@ function renderDropdown() {
     });
 }
 
-
-
+renderDropdown();
 
 // Handle habit selection
 habitDropdown.addEventListener('change', function() {
@@ -211,10 +210,10 @@ createNewListBtn.addEventListener('click', function(e) {
     const listName = document.getElementById('list-name').value;
     const selectedEmoji = document.getElementById('selected-emoji').textContent;
     addToCategory(listName, selectedEmoji);
-    saveTasksToLocalStorage();
     saveHabits();
     renderHabitList(habitList);
     renderDropdown();
+    saveTasksToLocalStorage();
     document.querySelector('.create-list-modal').style.display = 'none';
 })
 
@@ -399,11 +398,10 @@ taskForm.addEventListener('submit', function(event) {
 
   
     renderHabitList(habitList);
+    renderTasks()
     document.querySelector('.task-modal').style.display = 'none'; // Close the task modal
  // Close the modal
 });
-
-
 
 function updateDateTime() {
     const now = new Date();
@@ -454,17 +452,19 @@ function renderTasks() {
     const taskItem = document.createElement('div');
     taskItem.innerHTML = `
     <div class="task-item">
-    <div class="task-item-text">
-      <h3 class="task-title">${task.habitIcon} ${task.habitCategory}</h3>
-      <div class="task-name">${task.taskName}</div>
-    </div>
-    <div>
-        <div class="start-date">${task.startDate}</div>
-        <div class="end-date">${task.endDate}</div>
-        <div class="task-time">${task.time}</div>
-    </div>
-      <button class="task-item-btn" onclick="editTask(${index})">Edit</button>
-      <button class="task-item-btn" onclick="deleteTask(${index})">Delete</button>
+        <div class="task-item-text">
+            <h3 class="task-title">${task.habitIcon} ${task.habitCategory}</h3>
+            <div class="task-name">${task.taskName}</div>
+        </div>
+        <div class="task-item-date">
+            <div class="start-date">${task.startDate}</div>
+            <div class="end-date">${task.endDate}</div>
+            <div class="task-time">${task.time}</div>
+        </div>
+        <div class="task-item-btns">
+            <button class="task-item-btn" onclick="editTask(${index})">Edit</button>
+            <button class="task-item-btn" onclick="deleteTask(${index})">Delete</button>
+        </div>
     </div>
     `;
     taskList.appendChild(taskItem);
@@ -502,18 +502,46 @@ document.getElementById('editForm').addEventListener('submit', function (e) {
   tasks[currentEditIndex] = updatedTask;
   localStorage.setItem('tasks', JSON.stringify(tasks));
   renderTasks();
-  e.target.style.display = 'none'; // Close the modal
-//   closeModal();
+  document.getElementById('editModal').style.display = 'none'; // Close the edit modal
 });
 
 // Delete function
 function deleteTask(index) {
-  if (confirm('Are you sure you want to delete this task?')) {
-    tasks.splice(index, 1);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    renderTasks();
+    if (confirm('Are you sure you want to delete this task?')) {
+      const taskToDelete = tasks[index];
+  
+      // Step 1: Remove from global tasks array
+      tasks.splice(index, 1);
+  
+      // Step 2: Remove from the correct category's task array
+      const category = habitList.find(habit => habit.name === taskToDelete.habitCategory);
+  
+      if (category) {
+        const taskIndexInCategory = category.task.findIndex(task =>
+          task.taskName === taskToDelete.taskName &&
+          task.startDate === taskToDelete.startDate &&
+          task.endDate === taskToDelete.endDate &&
+          task.time === taskToDelete.time
+        );
+  
+        if (taskIndexInCategory !== -1) {
+          category.task.splice(taskIndexInCategory, 1);
+          category.decrease(); // optional: update count
+        }
+      }
+  
+      // Step 3: Save updates
+      saveTasksToLocalStorage();
+      saveHabits();
+  
+      // Step 4: Re-render
+      renderTasks();
+      renderHabitList(habitList);
+    }
   }
-}
+  
+
+
 
 
 renderTasks();

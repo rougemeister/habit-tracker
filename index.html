@@ -11,8 +11,11 @@
     <header>
         <h1 class="page-title">Habit Tracker</h1>
         <div class="date-container">
-            <div id="greeting">Good day!</div>
+            <div class="date-container-greeting">
+                <div id="greeting">Good day!</div>
             <div id="date">Date loading...</div>
+            </div>
+            
             <div id="time">00:00:00</div>
         </div>
         <div class="button-container">
@@ -26,7 +29,10 @@
             </ul>
             <button class="create-list">Create new list</button>
         </section>
-        <div id="task-list"></div>
+       <section class="list-container">
+            <div id="task-list"></div>
+       </section>
+        
     </main>
 
     <div class="create-list-modal modal">
