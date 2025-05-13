@@ -16,6 +16,7 @@ class Category {
         this.name = name;
         this.icon = icon;
         this.count = 0;
+        this.task = [];
         this.increase = function() {
             this.count++;
         };
@@ -40,57 +41,53 @@ class Habit {
 }
 
 
-tasks = []
+
+// Function to save tasks to local storage
+function saveTasksToLocalStorage () {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+}
+  
+  // Function to save habits to local storage
+  function saveHabits() {
+    localStorage.setItem('habitList', JSON.stringify(habitList));
+  }
+  
+  // Example of adding a new task
+  function addTask(task) {
+    tasks.push(task);
+    saveTasks();
+  }
+  
+  // Example of adding a new habit
+  function addHabit(habit) {
+    habitList.push(habit);
+    saveHabits();
+  }
+  
 
 function createCategory(name, icon) {
     return new Category(name, icon);
 }
 
+
+  
+
 function addToCategory(name, icon) {
     habitList.push(createCategory(name, icon));
-    renderHabitList(habitList); // Re-render after adding
+    saveTasksToLocalStorage();
+    saveHabits();
+    renderHabitList(habitList); 
+    renderTasks()
+    // Re-render after adding
+    
 }
 
-
-const habitList = [
-    {
-        name: 'Exercise',
-        count: 0,
-        icon: '🏋️',
-        increase(){
-            this.count++
-        },
-        decrease(){
-            this.count--
-        }
-    },
-    {
-        name: 'Cook',
-        count: 0,
-        icon: '🍳',
-        increase(){
-            this.count++
-        },
-        decrease(){
-            this.count--
-        }
-    },
-    {
-        name: 'Vacation',
-        count: 0,
-        icon: '🏖️' ,
-        increase(){
-            this.count++
-        },
-        decrease(){
-            this.count--
-        }
-    }
-    
-]
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+const habitList = JSON.parse(localStorage.getItem('habitList')) || [];
 
 
-addToCategory('Bobba', '🏋️');
+
 
 
 function selectActive(container) {
@@ -116,7 +113,7 @@ function selectActive(container) {
                                 <span class="habit-icon">${habit.icon}</span>
                                 <span>${habit.name}</span> 
                             </div>
-                            <span class="habit-count">${habit.count}</span> 
+                            <span class="habit-count">${habit.task.length}</span> 
                         </div>`;
         li.classList.add('list-item');
         listElement.appendChild(li);
@@ -173,7 +170,6 @@ closeCreateListBtn.addEventListener('click', closeModal);
 closeSelectActiveModal.addEventListener('click', closeModal);
 closeTaskBtn.addEventListener('click', closeModal);
 
-
 createTaskBtn.addEventListener('click', function() {
     document.querySelector('.task-modal').style.display = 'block';
 })
@@ -205,6 +201,8 @@ createNewListBtn.addEventListener('click', function(e) {
     const listName = document.getElementById('list-name').value;
     const selectedEmoji = document.getElementById('selected-emoji').textContent;
     addToCategory(listName, selectedEmoji);
+    saveHabits();
+    renderHabitList(habitList);
     document.querySelector('.create-list-modal').style.display = 'none';
 })
 
@@ -366,25 +364,30 @@ taskForm.addEventListener('submit', function(event) {
     const selectedHabitIndex = habitDropdown.value;
     const selectedHabit = habitList[selectedHabitIndex];
     
-    // const habitData = {
-    //     taskName: taskNameInput.value,
-    //     habitCategory: selectedHabit ? selectedHabit.name : '',
-    //     habitIcon: selectedHabit ? selectedHabit.icon : '',
-    //     startDate: startDateInput.value,
-    //     endDate: endDateInput.value,
-    //     time: taskTimeInput.value
-    // };
-    const taskData = new Habit(taskNameInput.value, startDateInput.value, 
-        endDateInput.value, selectedHabit ? selectedHabit.name : '', 
-        taskTimeInput.value, selectedHabit ? selectedHabit.icon : '')
-    
-    tasks.push(taskData)
-    console.log(tasks)
-    
-    console.log('Habit created:', taskData );
-    // Here you would typically handle the form submission
-    // For example, send the data to a server or store it locally
-    
+    const habitData = {
+        taskName: taskNameInput.value,
+        habitCategory: selectedHabit ? selectedHabit.name : '',
+        habitIcon: selectedHabit ? selectedHabit.icon : '',
+        startDate: startDateInput.value,
+        endDate: endDateInput.value,
+        time: taskTimeInput.value
+    };
+
+    // Push task to selected habit
+    if (selectedHabit) {
+        selectedHabit.task.push(habitData);
+    }
+
+    // Push to global tasks array
+    tasks.push(habitData);
+
+    // Save to localStorage
+    saveTasksToLocalStorage();
+
+    // Re-render UI if needed
+    renderHabitList(habitList);
+
+    console.log('Habit created:', habitData );
 });
 
 function updateDateTime() {
@@ -425,3 +428,80 @@ updateDateTime();
 setInterval(updateDateTime, 1000);
 
 
+let currentEditIndex = null;
+
+// Function to render task list
+function renderTasks() {
+  const taskList = document.getElementById('taskList');
+  taskList.innerHTML = '';
+
+  tasks.forEach((task, index) => {
+    const taskItem = document.createElement('div');
+    taskItem.innerHTML = `
+    <div class="task-item">
+    <div>
+      <div>${task.habitIcon} ${task.habitCategory} </div>
+      <div>${task.taskName}</div>
+    </div>
+      <div>${task.startDate} to ${task.endDate} at ${task.time}</div>
+      <button class="task-item-btn" onclick="editTask(${index})">Edit</button>
+      <button class="task-item-btn" onclick="deleteTask(${index})">Delete</button>
+    </div>
+    `;
+    taskList.appendChild(taskItem);
+  });
+}
+
+// Function to open modal and prefill form
+function editTask(index) {
+  const task = tasks[index];
+  currentEditIndex = index;
+
+  document.getElementById('editTaskName').value = task.taskName;
+  document.getElementById('editHabitCategory').value = task.habitCategory;
+  document.getElementById('editHabitIcon').value = task.habitIcon;
+  document.getElementById('editStartDate').value = task.startDate;
+  document.getElementById('editEndDate').value = task.endDate;
+  document.getElementById('editTime').value = task.time;
+
+  document.getElementById('editModal').style.display = 'block';
+}
+
+// Function to handle form submission
+document.getElementById('editForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const updatedTask = {
+    taskName: document.getElementById('editTaskName').value,
+    habitCategory: document.getElementById('editHabitCategory').value,
+    habitIcon: document.getElementById('editHabitIcon').value,
+    startDate: document.getElementById('editStartDate').value,
+    endDate: document.getElementById('editEndDate').value,
+    time: document.getElementById('editTime').value,
+  };
+
+  tasks[currentEditIndex] = updatedTask;
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  renderTasks();
+  console.log(tasks)
+//   closeModal();
+});
+
+// Delete function
+function deleteTask(index) {
+  if (confirm('Are you sure you want to delete this task?')) {
+    tasks.splice(index, 1);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    renderTasks();
+  }
+}
+
+// Close modal
+// function closeModal() {
+//   document.getElementById('editModal').classList.add('hidden');
+// }
+
+// Initial render
+renderTasks();
+
+console.log(tasks)  

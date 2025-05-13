@@ -468,3 +468,22 @@ input:focus, select:focus {
     margin: 1rem 0;
     color: #3498db;
 }
+
+.edit-task-modal {
+    display: none; /* Hidden by default */
+}
+
+.task-item {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+}
+
+.task-item-btn {
+    border: none;
+    padding: 15px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}

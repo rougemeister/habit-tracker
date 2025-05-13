@@ -26,6 +26,7 @@
             </ul>
             <button class="create-list">Create new list</button>
         </section>
+        <div id="taskList"></div>
     </main>
 
     <div class="create-list-modal modal">
@@ -125,7 +126,24 @@
 </div>
 
 
-
+<div id="editModal" class="modal edit-task-modal">
+    <form class="modal-content" id="editForm">
+      <label for="edit-task-modal">task name</label>
+      <input type="text" id="editTaskName" placeholder="Task Name" required />
+      <label for="editHabitCategory">category</label>
+      <input type="text" id="editHabitCategory" placeholder="Category" required />
+      <label for="editHabitIcon">icon</label>
+      <input type="text" id="editHabitIcon" placeholder="Icon" required />
+      <label for="editStartDate">start date</label>
+      <input type="date" id="editStartDate" required />
+      <label for="editEndDate">end date</label>
+      <input type="date" id="editEndDate" required />
+      <label for="editTime">set time</label>
+      <input type="time" id="editTime" required />
+      <button type="submit">Save Changes</button>
+      <button type="button" onclick="closeModal()">Cancel</button>
+    </form>
+  </div>
 
 
 </body>
