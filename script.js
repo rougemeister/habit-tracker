@@ -432,18 +432,22 @@ let currentEditIndex = null;
 
 // Function to render task list
 function renderTasks() {
-  const taskList = document.getElementById('taskList');
+  const taskList = document.getElementById('task-list');
   taskList.innerHTML = '';
 
   tasks.forEach((task, index) => {
     const taskItem = document.createElement('div');
     taskItem.innerHTML = `
     <div class="task-item">
-    <div>
-      <div>${task.habitIcon} ${task.habitCategory} </div>
-      <div>${task.taskName}</div>
+    <div class="task-item-text">
+      <h3 class="task-title">${task.habitIcon} ${task.habitCategory}</h3>
+      <div class="task-name">${task.taskName}</div>
     </div>
-      <div>${task.startDate} to ${task.endDate} at ${task.time}</div>
+    <div>
+        <div class="start-date">${task.startDate}</div>
+        <div class="end-date">${task.endDate}</div>
+        <div class="task-time">${task.time}</div>
+    </div>
       <button class="task-item-btn" onclick="editTask(${index})">Edit</button>
       <button class="task-item-btn" onclick="deleteTask(${index})">Delete</button>
     </div>
@@ -483,7 +487,7 @@ document.getElementById('editForm').addEventListener('submit', function (e) {
   tasks[currentEditIndex] = updatedTask;
   localStorage.setItem('tasks', JSON.stringify(tasks));
   renderTasks();
-  console.log(tasks)
+  e.target.style.display = 'none'; // Close the modal
 //   closeModal();
 });
 
