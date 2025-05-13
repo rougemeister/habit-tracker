@@ -1,7 +1,6 @@
 // habitTracker.js - Core functionality for habit tracking
 
-import { habitList, tasks, saveHabits, saveTasksToLocalStorage, formatDate } from './storage.js';
-import { renderHabitList, renderTasks, renderDropdown } from './ui.js';
+import { tasks, formatDate } from './storage.js';
 
 // Initialize date variables
 let currentDate = new Date();

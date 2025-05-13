@@ -1,7 +1,7 @@
 // ui.js - Handles UI elements and rendering
 
 import { habitList, tasks, saveTasksToLocalStorage, saveHabits, addToCategory, deleteTask } from './storage.js';
-import { currentEditIndex, currentDate, generateCalendar, selectActive, editTask, updateDateTime } from './habitTracker.js';
+import { currentEditIndex, currentDate, generateCalendar, selectActive, editTask } from './habitTracker.js';
 
 // DOM Elements
 const selectedEmoji = document.getElementById('selected-emoji');
@@ -21,7 +21,7 @@ const taskForm = document.getElementById('task-form');
 
 // Function to render habit list
 function renderHabitList(array) {
-    listElement.innerHTML = ''; // Clear existing items
+    // listElement.innerHTML = ''; // Clear existing items
 
     array.forEach(habit => {
         const li = document.createElement('li');

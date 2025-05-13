@@ -42,7 +42,7 @@ function saveHabits() {
 
 function addTask(task) {
     tasks.push(task);
-    saveTasks();
+    saveTasksToLocalStorage();
 }
 
 function addHabit(habit) {
