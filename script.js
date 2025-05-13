@@ -174,13 +174,23 @@ createTaskBtn.addEventListener('click', function() {
     document.querySelector('.task-modal').style.display = 'block';
 })
 
+
+
 const habitDropdown = document.getElementById('habit-category');
-habitList.forEach((habit, index) => {
-    const option = document.createElement('option');
-    option.value = index;
-    option.textContent = `${habit.icon} ${habit.name}`;
-    habitDropdown.appendChild(option);
-});
+function renderDropdown() {
+    const dropdown = document.getElementById('habit-category');
+    dropdown.innerHTML = ''; // Clear existing options
+
+    habitList.forEach((habit, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${habit.icon} ${habit.name}`;
+        dropdown.appendChild(option);
+    });
+}
+
+
+
 
 // Handle habit selection
 habitDropdown.addEventListener('change', function() {
@@ -201,8 +211,10 @@ createNewListBtn.addEventListener('click', function(e) {
     const listName = document.getElementById('list-name').value;
     const selectedEmoji = document.getElementById('selected-emoji').textContent;
     addToCategory(listName, selectedEmoji);
+    saveTasksToLocalStorage();
     saveHabits();
     renderHabitList(habitList);
+    renderDropdown();
     document.querySelector('.create-list-modal').style.display = 'none';
 })
 
@@ -382,13 +394,16 @@ taskForm.addEventListener('submit', function(event) {
     tasks.push(habitData);
 
     // Save to localStorage
+    saveHabits();
     saveTasksToLocalStorage();
 
-    // Re-render UI if needed
+  
     renderHabitList(habitList);
-
-    console.log('Habit created:', habitData );
+    document.querySelector('.task-modal').style.display = 'none'; // Close the task modal
+ // Close the modal
 });
+
+
 
 function updateDateTime() {
     const now = new Date();
@@ -500,12 +515,7 @@ function deleteTask(index) {
   }
 }
 
-// Close modal
-// function closeModal() {
-//   document.getElementById('editModal').classList.add('hidden');
-// }
 
-// Initial render
 renderTasks();
 
 console.log(tasks)  

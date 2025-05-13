@@ -130,12 +130,12 @@ input {
 .task-modal {
     display: none; /* Hidden by default */
 }
-.task-modal.modal {
+.modal {
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     overflow: auto;
     background-color: rgba(177, 175, 175, 0.5); 
@@ -223,7 +223,7 @@ input {
 }
 
 /* Create task modal */
-.task-modal {
+/* .task-modal {
     position: relative;
     width: 100%;
     max-width: 500px;
@@ -232,7 +232,7 @@ input {
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-}
+} */
 
 .modal-content {
     padding: 24px;
@@ -510,9 +510,7 @@ input:focus, select:focus {
     cursor: pointer;
 }
 
-#task-list:last-child{
-    border-bottom: 3px solid #0066cc;
-}
+
 .edit-task-modal button{
     margin: 5px 0;
 }
